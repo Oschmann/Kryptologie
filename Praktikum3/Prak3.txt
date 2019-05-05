@@ -1,0 +1,52 @@
+function smallestE(e,f: integer): integer;
+begin
+	while gcd(e,f) <> 1 do
+		e:=e+1;
+	end;
+	return e;
+end;
+
+function privateKey(c,m: integer):integer;
+var
+	loesung, ggTeiler, r0, r1, rZwischenspeicher, x0, x1, xZwischenspeicher, q, xTilde: integer;
+begin
+	ggTeiler := gcd(c,m);
+	
+	r0 := c;
+	r1 := m;
+	x0 := 1;
+	x1 := 0;
+	
+	
+	while (r1 <> ggTeiler ) do
+	
+		q := r0 div r1;
+	
+		rZwischenspeicher := r1;
+		r1 := r0 mod r1;
+		r0 := rZwischenspeicher;
+		
+		
+		xZwischenspeicher := x1;
+		x1 := x0 - x1*q;
+		x0 := xZwischenspeicher;
+		
+	end;
+	
+
+	
+	loesung := x1 mod m;
+	return loesung;	
+end;
+
+
+p: 8486_74632_40064_50067_22604_73664_03136_02796_31167_89796_70692_14379_
+12720_98885_60859_36442_77593_83861_38134_04601
+
+q: 24508_98280_04404_30864_17609_62183_20559_04459_41551_73926_96041_82483_
+00512_05976_79020_41351_90412_74449_69624_76263
+
+n: 2080_01519_68677_51368_04227_50729_33444_26658_07902_50225_34243_43043_
+93779_24357_65699_46940_23065_02004_09390_72412_53605_37998_66980_59169_28395_
+22923_73177_45627_66204_17373_74556_27921_89411_27791_20398_56139_30932_05193_
+56774_86063

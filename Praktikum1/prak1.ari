@@ -1,0 +1,80 @@
+function ggt(a, b: integer):integer;
+var
+	rest: integer;
+begin
+	rest :=  a;
+	while rest <> 0 do
+		rest := (a mod b);
+		a := b;
+		b := rest;
+	end;
+	return a;
+end;
+
+
+function ggtSchritte(a, b: integer):integer;
+var
+	rest,steps: integer;
+begin
+	rest :=  a;
+	steps := 0;
+	while (rest <> 0) do
+		rest := a mod b;
+		steps := steps + 1;
+		a := b;
+		b := rest;
+	end;
+	return steps;
+end;
+
+
+function ggtSchritteMittel(anz, n: integer):integer;
+var
+	mittel, count, a, b: integer;
+begin
+	for count:=1 to anz do
+		a := random(n-1)+1;
+		b := random(n-1)+1;
+		mittel := mittel + ggtSchritte(a,b);
+	end;
+	mittel := mittel / anz;
+	return mittel;
+end;
+
+
+function ggtAlgorithmus(c,d,m: integer):integer;
+var
+	loesung, ggTeiler, r0, r1, rZwischenspeicher, x0, x1, xZwischenspeicher, q, xTilde: integer;
+begin
+	ggTeiler := ggt(c,m);
+	if (d mod ggTeiler)<>0 then
+		loesung := -1;
+		return loesung;
+	end;
+	
+	r0 := c;
+	r1 := m;
+	x0 := 1;
+	x1 := 0;
+	
+	
+	while (r1 <> ggTeiler ) do
+	
+		q := r0 div r1;
+	
+		rZwischenspeicher := r1;
+		r1 := r0 mod r1;
+		r0 := rZwischenspeicher;
+		
+		
+		xZwischenspeicher := x1;
+		x1 := x0 - x1*q;
+		x0 := xZwischenspeicher;
+		
+	end;
+	
+
+	xTilde := (d div ggTeiler)*x1;
+	loesung := xTilde mod m;
+	return loesung;	
+end;

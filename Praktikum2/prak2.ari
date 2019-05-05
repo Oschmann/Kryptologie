@@ -1,0 +1,111 @@
+
+function millerRabin(n, it: integer):integer; 
+var
+	result, a, test, count: integer;
+begin 
+	result = 0;
+	count = 0;
+	test:= 0;
+
+	for count:=1 to it do
+		a := random(n-1)+1;
+		test:= eineGeeigneteEigenschaft(a, n);
+		if test = 1 then
+			result:= 1;
+			return result;
+		end;
+	end;
+	return result;		
+end;
+
+function eineGeeigneteEigenschaft(a, n: integer): integer;
+var
+	k, result: integer;
+begin
+	result:= 0;
+	
+
+	if (a**(n-1) mod n) <> (1 mod n) then
+		result := 1;	
+		return result;
+	end;
+
+	k:= (n-1) div 2;
+
+	while true do
+
+		if ((a**k mod n) <> (1 mod n)) and ((a**k mod n) <> (-1 mod n)) then
+			result:= 1;
+			return result;	
+		end;
+		
+
+		if (a**k mod n) = (-1 mod n) then
+			result:= 0;
+			return result;
+		end;
+
+		if ((k mod 2) <> 0) then
+			result:= 0;
+			return result;
+		end;
+
+
+		k:= k div 2;
+	end;
+	return result;
+end;
+
+
+function findePrim(n, it: integer): integer;
+begin
+	if ((n mod 2) = 0) then
+		n:=n+1;
+	end;
+
+	
+	while(true) do
+		if(millerRabin(n, it) = 0) then 
+			return n;
+		end;
+		n:=n+2;	
+	end;
+end;
+
+function findeZeugen(n: integer): integer;
+var
+	count, anzahl: integer;
+begin
+	anzahl:= 0;
+	
+	for count:=1 to (n-1) do
+		anzahl:= anzahl + eineGeeigneteEigenschaft(count, n);
+	end;
+return anzahl;
+end;
+
+
+function wieWeitPrim(n, anz, it: integer):real;
+var
+	count, m, p, results: integer;
+begin
+	m:=0;
+	p:=0;
+	results:=0;
+
+	for count:=0 to anz do
+		m := random(n);
+		p := findePrim(m, it);
+		results:= results + (p-m);
+	end;
+return results / anz;
+end;
+		
+		
+
+
+
+
+
+
+
